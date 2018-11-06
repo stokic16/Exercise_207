@@ -2,10 +2,12 @@
 
 package exercise_207;
 
+import java.io.Serializable;
+
 /**
  * @author Kilian Stöckler
  */
-public class WeatherStation {
+public class WeatherStation implements Serializable{
     
     private String place;
     private int seaLevel;

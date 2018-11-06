@@ -17,6 +17,7 @@ public class GUI extends javax.swing.JFrame {
      * Creates new form GUI
      */
     private StationBl model = new StationBl();
+
     public GUI() {
         initComponents();
         jTable1.setModel(model);
@@ -80,9 +81,19 @@ public class GUI extends javax.swing.JFrame {
         jMenu2.setText("Values");
 
         SetTemp.setText("Set Temperature");
+        SetTemp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SetTempActionPerformed(evt);
+            }
+        });
         jMenu2.add(SetTemp);
 
         SetHumidity.setText("Set Humidity");
+        SetHumidity.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SetHumidityActionPerformed(evt);
+            }
+        });
         jMenu2.add(SetHumidity);
 
         jMenuBar1.add(jMenu2);
@@ -104,21 +115,43 @@ public class GUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void AddStationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddStationActionPerformed
-       MyDialog dialog = new MyDialog(this, true);
-       dialog.setVisible(true);
-       if(dialog.isOk()){
-           model.addStation(dialog.getStation());
-       }
+        MyDialog dialog = new MyDialog(this, true);
+        dialog.setVisible(true);
+        try {
+            if (dialog.isOk()) {
+                model.addStation(dialog.getStation());
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
     }//GEN-LAST:event_AddStationActionPerformed
 
     private void RemoveStationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RemoveStationActionPerformed
-        int[] idxs= jTable1.getSelectedRows();
-        if(idxs.length==0){
+        int[] idxs = jTable1.getSelectedRows();
+        if (idxs.length == 0) {
             JOptionPane.showMessageDialog(this, "Nothing selected!");
-        }else{
+        } else {
             model.removeStation(idxs);
         }
     }//GEN-LAST:event_RemoveStationActionPerformed
+
+    private void SetTempActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SetTempActionPerformed
+        double temp = Double.parseDouble(JOptionPane.showInputDialog("Enter Temperature!"));
+        if (temp >= -35 && temp <= 45) {
+            model.set(jTable1.getSelectedRow(), temp);
+        } else {
+            JOptionPane.showMessageDialog(this, "No valid input!");
+        }
+    }//GEN-LAST:event_SetTempActionPerformed
+
+    private void SetHumidityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SetHumidityActionPerformed
+        int hum = Integer.parseInt(JOptionPane.showInputDialog("Enter Humidity!"));
+        if (hum >= 0 && hum <= 100) {
+            model.set(jTable1.getSelectedRow(), hum);
+        } else {
+            JOptionPane.showMessageDialog(this, "No valid input!");
+        }
+    }//GEN-LAST:event_SetHumidityActionPerformed
 
     /**
      * @param args the command line arguments

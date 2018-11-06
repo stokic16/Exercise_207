@@ -5,6 +5,8 @@
  */
 package exercise_207;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author kilia
@@ -90,6 +92,7 @@ public class MyDialog extends javax.swing.JDialog {
             ok = true;
             this.dispose();
         }catch(Exception e){
+            JOptionPane.showMessageDialog(this, "Something went wrong!");
             e.printStackTrace();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
