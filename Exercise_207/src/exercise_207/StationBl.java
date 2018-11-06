@@ -21,12 +21,9 @@ public class StationBl extends AbstractTableModel{
         this.sort();
     }
     
-    public void removeStation(int idx){
-        stations.remove(idx);
-        fireTableRowsDeleted(idx, idx);
-    }
+
     public void removeStation(int[] idx){
-        for(int i=0;i<idx.length;i++){
+        for(int i=0;i<=idx.length-1;i++){
             stations.remove(idx[i]);
             fireTableRowsDeleted(idx[i],idx[i]);
         }

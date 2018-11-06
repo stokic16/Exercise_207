@@ -5,6 +5,8 @@
  */
 package exercise_207;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author kilia
@@ -14,8 +16,11 @@ public class GUI extends javax.swing.JFrame {
     /**
      * Creates new form GUI
      */
+    private StationBl model = new StationBl();
     public GUI() {
         initComponents();
+        jTable1.setModel(model);
+        jTable1.setDefaultRenderer(Object.class, new CellRenderer());
     }
 
     /**
@@ -55,9 +60,19 @@ public class GUI extends javax.swing.JFrame {
         jMenu1.setText("Stations");
 
         AddStation.setText("Add Weather Station");
+        AddStation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AddStationActionPerformed(evt);
+            }
+        });
         jMenu1.add(AddStation);
 
         RemoveStation.setText("Remove Weather Station");
+        RemoveStation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RemoveStationActionPerformed(evt);
+            }
+        });
         jMenu1.add(RemoveStation);
 
         jMenuBar1.add(jMenu1);
@@ -87,6 +102,23 @@ public class GUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void AddStationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddStationActionPerformed
+       MyDialog dialog = new MyDialog(this, true);
+       dialog.setVisible(true);
+       if(dialog.isOk()){
+           model.addStation(dialog.getStation());
+       }
+    }//GEN-LAST:event_AddStationActionPerformed
+
+    private void RemoveStationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RemoveStationActionPerformed
+        int[] idxs= jTable1.getSelectedRows();
+        if(idxs.length==0){
+            JOptionPane.showMessageDialog(this, "Nothing selected!");
+        }else{
+            model.removeStation(idxs);
+        }
+    }//GEN-LAST:event_RemoveStationActionPerformed
 
     /**
      * @param args the command line arguments

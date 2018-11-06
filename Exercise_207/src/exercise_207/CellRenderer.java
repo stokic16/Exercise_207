@@ -24,14 +24,18 @@ public class CellRenderer implements TableCellRenderer
         label.setOpaque(true);
         double temp = station.getTemperature();
         int hum = station.getHumidity();
-        if(temp>25 && hum<20){
-            label.setBackground(Color.yellow);
-        }
-        if(temp<0&&hum<30){
-            label.setBackground(Color.blue);
-        }
-        if(temp>=0&&temp<=25&&hum>50){
-            label.setBackground(Color.GREEN);
+        if(isSelected){
+            label.setBackground(Color.cyan);
+        }else{
+            if(temp>25 && hum<20){
+                label.setBackground(Color.yellow);
+            }
+            if(temp<0&&hum<30){
+                label.setBackground(Color.blue);
+            }
+            if(temp>=0&&temp<=25&&hum>50){
+                label.setBackground(Color.GREEN);
+            }
         }
         switch(column){
             case 0: label.setText(station.getPlace());break;
