@@ -20,12 +20,12 @@ public class StationBl extends AbstractTableModel {
     private ArrayList<WeatherStation> stations = new ArrayList<>();
 
     public void addStation(WeatherStation w) throws Exception {
-        if (w.getTemperature() >= -35 && w.getTemperature() <= 45) {
-            throw new Exception("Temperature must be between -35° and +45°!");
-        }
-        if (w.getHumidity() >= 0 && w.getHumidity() <= 100) {
-            throw new Exception("Humidity must be between 0% and 100%!");
-        }
+//        if (w.getTemperature() >= -35 && w.getTemperature() <= 45) {
+//            throw new Exception("Temperature must be between -35° and +45°!");
+//        }
+//        if (w.getHumidity() >= 0 && w.getHumidity() <= 100) {
+//            throw new Exception("Humidity must be between 0% and 100%!");
+//        }
         stations.add(w);
         fireTableRowsInserted(stations.size(), stations.size());
         this.sort();
@@ -57,7 +57,7 @@ public class StationBl extends AbstractTableModel {
         FileOutputStream fos = new FileOutputStream(f);
         ObjectOutputStream oos = new ObjectOutputStream(fos);
         for (WeatherStation station : stations) {
-            oos.writeObject(oos);
+            oos.writeObject(station);
         }
         oos.flush();
         oos.close();

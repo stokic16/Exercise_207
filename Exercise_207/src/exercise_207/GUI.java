@@ -5,6 +5,7 @@
  */
 package exercise_207;
 
+import java.io.File;
 import javax.swing.JOptionPane;
 
 /**
@@ -17,11 +18,20 @@ public class GUI extends javax.swing.JFrame {
      * Creates new form GUI
      */
     private StationBl model = new StationBl();
+    private File file = new File("../stations.ser");
 
     public GUI() {
         initComponents();
         jTable1.setModel(model);
         jTable1.setDefaultRenderer(Object.class, new CellRenderer());
+            if(file.exists()){
+              try{
+                model.load(file);
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(this, "Ops something went wrong with loading!");
+            }  
+        }
+        
     }
 
     /**
@@ -44,6 +54,11 @@ public class GUI extends javax.swing.JFrame {
         SetHumidity = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -152,6 +167,15 @@ public class GUI extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No valid input!");
         }
     }//GEN-LAST:event_SetHumidityActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        try{
+            model.save(file);
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, "Ops something went wrong with saving!");
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
